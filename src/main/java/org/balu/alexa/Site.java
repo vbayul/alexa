@@ -2,15 +2,14 @@ package org.balu.alexa;
 
 public class Site {
 
-	private int countrRank;
+	private String countrRank;
 	private String URL;
-	private int globalRank;
+	private String globalRank;
 	private String statURL;
-	
-	public int getCountrRank() {
+	public String getCountrRank() {
 		return countrRank;
 	}
-	public void setCountrRank(int countrRank) {
+	public void setCountrRank(String countrRank) {
 		this.countrRank = countrRank;
 	}
 	public String getURL() {
@@ -19,10 +18,10 @@ public class Site {
 	public void setURL(String uRL) {
 		URL = uRL;
 	}
-	public int getGlobalRank() {
+	public String getGlobalRank() {
 		return globalRank;
 	}
-	public void setGlobalRank(int globalRank) {
+	public void setGlobalRank(String globalRank) {
 		this.globalRank = globalRank;
 	}
 	public String getStatURL() {
@@ -31,4 +30,5 @@ public class Site {
 	public void setStatURL(String statURL) {
 		this.statURL = statURL;
 	}
+	
 }
