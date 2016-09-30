@@ -1,8 +1,9 @@
-package org.balu.alexa;
+package org.balu.alexa.parser;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.balu.alexa.object.Site;
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
@@ -23,13 +24,13 @@ public class ParserPage {
 		parser.reset();
 		
 		listSite = getStatURL(parser,listSite);
-		
+
 		for (int i = 0; i < listSite.size(); i++) {
 			Site site = listSite.get(i);
 			site = getGlobalRank(site.getStatURL(), site);
 			listSite.set(i, site);
 		}
-
+		
 		return listSite;
 	}
 	
@@ -59,8 +60,6 @@ public class ParserPage {
             	
             	listSite.set(iList, site);
             	iList = iList+1;
-            	//System.out.println(/*i +" " + node1.toHtml() +" - "+ */node1.getText().substring(8, node1.getText().length()-1)+" - "+ node1.toPlainTextString());
-            	//linkStat.add(node1.getText().substring(8, node1.getText().length()-1));
             	}
         	}
 		} catch (ParserException e) {
@@ -88,7 +87,6 @@ public class ParserPage {
 	            site.setCountrRank(node.toPlainTextString());
 	            
 	            listSite.add(site);
-	            //System.out.println(/*i +" "+ node.toHtml()+" - "+*/ node.toPlainTextString());
 	        }
 	    } catch (ParserException e) {
 	        e.printStackTrace();
@@ -113,13 +111,11 @@ public class ParserPage {
 	            {
 	            	String rank = node1.getNextSibling().getNextSibling().getNextSibling().getText().replaceAll(",", "");
 	            	site.setGlobalRank(rank);
-
-	            	/*System.out.println(i +" "/* + node1.toHtml() /*+" - "+ node1.getText()
-	            	/*.substring(8, node1.getText().length()-1)+" - "+ node1.getNextSibling().getNextSibling().getNextSibling().getText());*/
 	            }
 	        }
 	    } catch (ParserException e) {
 	        e.printStackTrace();
+	        site.setGlobalRank("test");
 	    }
 		
 		return site;

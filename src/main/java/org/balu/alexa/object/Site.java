@@ -1,4 +1,4 @@
-package org.balu.alexa;
+package org.balu.alexa.object;
 
 public class Site {
 

@@ -3,13 +3,11 @@ package org.balu.alexa;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.htmlparser.Node;
-import org.htmlparser.NodeFilter;
+import org.balu.alexa.object.Site;
+import org.balu.alexa.parser.ParserPage;
+import org.balu.alexa.save.SaveToFile;
+import org.balu.alexa.save.SaveToFileImp;
 import org.htmlparser.Parser;
-import org.htmlparser.filters.AndFilter;
-import org.htmlparser.filters.HasAttributeFilter;
-import org.htmlparser.filters.TagNameFilter;
-import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 
 public class Begin {
@@ -44,31 +42,43 @@ public class Begin {
 			pageCont = countryCount/25+1;
 		}
 		
-		// объявляем ъект для вычисления нужного URL
+		// объявляем объект для вычисления нужного URL
 		GetURL getURL = new GetURL();
+		List<Site> listSite = new ArrayList<Site>();
+		ParserPage parserPage = new ParserPage();
+
+		SaveToFile saveToFile = new SaveToFileImp();
+
+		// подготовка нужного типа файла
+		if (format.equals("html"))
+		{
+			saveToFile.createHTML();
+		}
+		else
+		{
+			saveToFile.createCSV();
+		}
 		
 		// перенести в метод и передавать ему лишь нужное количество
 		for (int i = 0; i < pageCont; i++) {
 				
 			getURL.getPgeURl(i, countryCode);
-	        //Parser parser = new Parser(getURL.getPgeURl(i, countryCode));
-			//getCountryRank(parser,i);
+	        Parser parser = new Parser(getURL.getPgeURl(i, countryCode));
+	        listSite = parserPage.getParserList(parser, pageCont);
+			if (format.equals("html"))
+			{
+				saveToFile.saveToHTML(listSite, countryCount);
+			}
+			else
+			{
+				saveToFile.saveToCSV(listSite, countryCount);
+			}
 		}
 		
-		//getStatByLink();
-	}
-	
-
-	
-	private static List<String> linkStat = new ArrayList<String>();	
-	
-	
-	private static void getStatByLink()
-	{
-		for (int i = 0; i < linkStat.size(); i++) {
-			getGlobalRank(linkStat.get(i));
+		// закрытие файла, в слаче если хтмл
+		if (format.equals("html"))
+		{
+			saveToFile.closeHTML();
 		}
 	}
-	
-	
 }
