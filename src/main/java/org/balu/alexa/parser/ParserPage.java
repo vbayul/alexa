@@ -98,7 +98,9 @@ public class ParserPage {
 	{
 		try
 		{
-	        Parser parser1 = new Parser("http://www.alexa.com"+url);
+	        Parser parser1 = new Parser(url);
+	        System.out.println(url);
+	        
 	        parser1.setEncoding("utf-8");
 	        NodeFilter atrb2 = new AndFilter(new TagNameFilter("strong"), 
 	        	    new HasAttributeFilter("class","metrics-data align-vmiddle"));

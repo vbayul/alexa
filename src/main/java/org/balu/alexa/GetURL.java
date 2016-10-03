@@ -12,7 +12,9 @@ public class GetURL {
 		if (countryCode.equals(""))		
 		{
 			if (i>0)
-				URL ="http://www.alexa.com/topsites/global"+page;
+				{URL ="http://www.alexa.com/topsites/global"+page;
+			System.out.println(URL);}
+			
 			else
 				URL ="http://www.alexa.com/topsites/";
 		}

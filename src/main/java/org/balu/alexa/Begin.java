@@ -65,6 +65,7 @@ public class Begin {
 			getURL.getPgeURl(i, countryCode);
 	        Parser parser = new Parser(getURL.getPgeURl(i, countryCode));
 	        listSite = parserPage.getParserList(parser, pageCont);
+	        
 			if (format.equals("html"))
 			{
 				saveToFile.saveToHTML(listSite, countryCount);
