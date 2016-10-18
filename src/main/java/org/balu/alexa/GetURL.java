@@ -2,7 +2,7 @@ package org.balu.alexa;
 
 public class GetURL {
 
-	public String getPgeURl(int i, String countryCode)
+	public String getPageURl(int i, String countryCode)
 	{
 		String URL ="";
 		String page = ""; 

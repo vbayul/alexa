@@ -6,33 +6,18 @@ import java.util.List;
 
 import org.balu.alexa.object.Site;
 
-public class SaveToFileImp implements SaveToFile {
+public class SaveToFileHTML implements SaveToFile{
 
-	public void createCSV() {
-		try(FileWriter writer = new FileWriter("result.csv", false))
-		{
-			 writer.write("country rank;site URL;globalrank;link to Alexa's"+System.getProperty("line.separator"));
-		}
-		catch (IOException e) {
-		}
-	}
-	public void saveToCSV(List<Site> listSite, int count) {
-		try(FileWriter writer = new FileWriter("result.csv", false))
-		{
-			for (int i = 0; i <listSite.size(); i++) {
-				Site site = listSite.get(i);
-				if (Integer.parseInt(site.getCountrRank()) <= count)
-				{
-					writer.write(site.getCountrRank()+";"+site.getURL()+";"
-							+site.getGlobalRank()+";"+site.getStatURL()+System.getProperty("line.separator"));
-				}
-			}
-		}
-		catch (IOException e) {
-		}		
+	@Override
+	public void saveToFile(List<Site> listSite, int count)
+	{
+		createHTML();
+		saveToHTML(listSite,count);
+		closeHTML();
 	}
 
-	public void createHTML() {
+	private void createHTML() 
+	{
 		try(FileWriter writer = new FileWriter("result.html", false))
 		{
 			
@@ -44,7 +29,8 @@ public class SaveToFileImp implements SaveToFile {
 		}
 	}
 
-	public void saveToHTML(List<Site> listSite, int count) {
+	private void saveToHTML(List<Site> listSite, int count) 
+	{
 	
 		try(FileWriter writer = new FileWriter("result.html", true))
 		{
@@ -62,7 +48,8 @@ public class SaveToFileImp implements SaveToFile {
 		}
 	}
 
-	public void closeHTML() {
+	private void closeHTML() 
+	{
 		try(FileWriter writer = new FileWriter("result.html", true))
 		{
 			 writer.write("</table></body></html>");
@@ -70,6 +57,5 @@ public class SaveToFileImp implements SaveToFile {
 		catch (IOException e) {
 		}
 	}
-
 
 }

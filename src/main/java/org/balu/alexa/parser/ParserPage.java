@@ -15,33 +15,33 @@ import org.htmlparser.util.ParserException;
 
 public class ParserPage {
 
-	public List<Site> getParserList(Parser parser, int page)
+	public List<Site> getParserList(Parser Page, int page)
 	{
 		List<Site> listSite = new ArrayList<Site>();
 		
-		listSite = getCountryRank(parser);
+		listSite = getSiteCountryRank(Page);
 		
-		parser.reset();
+		Page.reset();
 		
-		listSite = getStatURL(parser,listSite);
+		listSite = getStatisticURL(Page,listSite);
 
 		for (int i = 0; i < listSite.size(); i++) {
 			Site site = listSite.get(i);
-			site = getGlobalRank(site.getStatURL(), site);
+			site = getSiteGlobalRank(site);
 			listSite.set(i, site);
 		}
 		
 		return listSite;
 	}
 	
-	private List<Site> getStatURL(Parser parser, List<Site> listSite)
+	private List<Site> getStatisticURL(Parser Page, List<Site> listSite)
 	{
 		try
 		{
 		// получаем ссылкуна статистику и название сайта
         NodeFilter atrb2 = new AndFilter(new TagNameFilter("a"), 
         	    new HasAttributeFilter("href"));
-        NodeList nodeList1 = parser.parse(atrb2);
+        NodeList nodeList1 = Page.parse(atrb2);
 
         int iList = 0;
         for(int i=0; i<nodeList1.size(); i++) 
@@ -68,16 +68,16 @@ public class ParserPage {
 		return listSite;
 	}
 	
-	private List<Site> getCountryRank(Parser parser)
+	private List<Site> getSiteCountryRank(Parser Page)
 	{
 		List<Site> listSite = new ArrayList<Site>();
 		try {
-	        parser.setEncoding("utf-8");
+			Page.setEncoding("utf-8");
 	        
 	        // глобальное значение для страны
 	        NodeFilter atrb1 = new AndFilter(new TagNameFilter("div"), 
 	        	    new HasAttributeFilter("class", "count"));
-	        NodeList nodeList = parser.parse(atrb1);
+	        NodeList nodeList = Page.parse(atrb1);
 
 	        for(int i=0; i<nodeList.size(); i++) 
 	        {
@@ -94,17 +94,16 @@ public class ParserPage {
 		return listSite;
 	}
 	
-	private Site getGlobalRank(String url, Site site)
+	private Site getSiteGlobalRank(Site site)
 	{
 		try
 		{
-	        Parser parser1 = new Parser(url);
-	        System.out.println(url);
-	        
-	        parser1.setEncoding("utf-8");
+	        Parser PageStatistic = new Parser(site.getStatURL());
+
+	        PageStatistic.setEncoding("utf-8");
 	        NodeFilter atrb2 = new AndFilter(new TagNameFilter("strong"), 
 	        	    new HasAttributeFilter("class","metrics-data align-vmiddle"));
-	        NodeList nodeList1 = parser1.parse(atrb2);
+	        NodeList nodeList1 = PageStatistic.parse(atrb2);
 	        
 	        for(int i=0; i<nodeList1.size(); i++) {
 	            Node node1 = nodeList1.elementAt(i);

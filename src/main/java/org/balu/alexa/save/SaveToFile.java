@@ -6,9 +6,5 @@ import org.balu.alexa.object.Site;
 
 public interface SaveToFile {
 
-	public void createCSV();
-	public void saveToCSV(List<Site> site, int count);
-	public void createHTML();
-	public void saveToHTML(List<Site> site, int count);
-	public void closeHTML();
+	public void saveToFile(List<Site> listSite, int count);
 }
