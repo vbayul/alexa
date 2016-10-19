@@ -9,10 +9,10 @@ import org.balu.alexa.object.Site;
 public class SaveToFileHTML implements SaveToFile{
 
 	@Override
-	public void saveToFile(List<Site> listSite, int count)
+	public void saveToFile(List<Site> Sites, int count)
 	{
 		createHTML();
-		saveToHTML(listSite,count);
+		saveToHTML(Sites,count);
 		closeHTML();
 	}
 
@@ -29,13 +29,13 @@ public class SaveToFileHTML implements SaveToFile{
 		}
 	}
 
-	private void saveToHTML(List<Site> listSite, int count) 
+	private void saveToHTML(List<Site> Sites, int count) 
 	{
 	
 		try(FileWriter writer = new FileWriter("result.html", true))
 		{
-			for (int i = 0; i < listSite.size(); i++) {
-				Site site = listSite.get(i);
+			for (int i = 0; i < Sites.size(); i++) {
+				Site site = Sites.get(i);
 				if (Integer.parseInt(site.getCountrRank()) <= count)
 				{
 					writer.write("<tr><td>"+site.getCountrRank()+"</td><td>"+site.getURL()+"</td>"

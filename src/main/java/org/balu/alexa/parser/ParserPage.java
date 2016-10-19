@@ -17,21 +17,21 @@ public class ParserPage {
 
 	public List<Site> getParserList(Parser Page, int page)
 	{
-		List<Site> listSite = new ArrayList<Site>();
+		List<Site> Sites = new ArrayList<Site>();
 		
-		listSite = getSiteCountryRank(Page);
+		Sites = getSiteCountryRank(Page);
 		
 		Page.reset();
 		
-		listSite = getStatisticURL(Page,listSite);
+		Sites = getStatisticURL(Page,Sites);
 
-		for (int i = 0; i < listSite.size(); i++) {
-			Site site = listSite.get(i);
+		for (int i = 0; i < Sites.size(); i++) {
+			Site site = Sites.get(i);
 			site = getSiteGlobalRank(site);
-			listSite.set(i, site);
+			Sites.set(i, site);
 		}
 		
-		return listSite;
+		return Sites;
 	}
 	
 	private List<Site> getStatisticURL(Parser Page, List<Site> listSite)
@@ -46,17 +46,17 @@ public class ParserPage {
         int iList = 0;
         for(int i=0; i<nodeList1.size(); i++) 
         {
-            Node node1 = nodeList1.elementAt(i);
+            Node node = nodeList1.elementAt(i);
             
-            if (node1.toHtml().contains("/siteinfo/") == true 
-            		&& node1.toHtml().contains("Site Metrics") == false
-            		&& node1.toHtml().contains("Site Overviews") == false)
+            if (node.toHtml().contains("/siteinfo/") == true 
+            		&& node.toHtml().contains("Site Metrics") == false
+            		&& node.toHtml().contains("Site Overviews") == false)
             	{
-            	String statURL = node1.getText().substring(8, node1.getText().length()-1);
+            	String statURL = node.getText().substring(8, node.getText().length()-1);
             	Site site = listSite.get(iList);
             	
             	site.setStatURL("http://alexa.com"+statURL);
-            	site.setURL("http://"+node1.toPlainTextString());
+            	site.setURL("http://"+node.toPlainTextString());
             	
             	listSite.set(iList, site);
             	iList = iList+1;
@@ -103,14 +103,14 @@ public class ParserPage {
 	        PageStatistic.setEncoding("utf-8");
 	        NodeFilter atrb2 = new AndFilter(new TagNameFilter("strong"), 
 	        	    new HasAttributeFilter("class","metrics-data align-vmiddle"));
-	        NodeList nodeList1 = PageStatistic.parse(atrb2);
+	        NodeList nodeList = PageStatistic.parse(atrb2);
 	        
-	        for(int i=0; i<nodeList1.size(); i++) {
-	            Node node1 = nodeList1.elementAt(i);
+	        for(int i=0; i<nodeList.size(); i++) {
+	            Node node = nodeList.elementAt(i);
 
-	            if (node1.getPreviousSibling().toHtml().contains("title='Global rank icon'"))
+	            if (node.getPreviousSibling().toHtml().contains("title='Global rank icon'"))
 	            {
-	            	String rank = node1.getNextSibling().getNextSibling().getNextSibling().getText().replaceAll(",", "");
+	            	String rank = node.getNextSibling().getNextSibling().getNextSibling().getText().replaceAll(",", "");
 	            	site.setGlobalRank(rank);
 	            }
 	        }

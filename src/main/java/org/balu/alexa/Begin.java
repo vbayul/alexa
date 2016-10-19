@@ -20,7 +20,8 @@ public class Begin {
 	
 	public static void main(String[] args) throws ParserException 
 	{
-
+		List<Site> Sites = new ArrayList<Site>();
+		
 		// парсим входные параметры
 		ParsInputParam parsInputParam = new ParsInputParam();
 		
@@ -39,15 +40,14 @@ public class Begin {
 		ParserPage parserPage = new ParserPage();
 
 
-		
 		// массив для хранения объектов класса Сайт, которые содержат данные осайте. 
-		List<Site> listSite = new ArrayList<Site>();
+
 		
 		// перенести в метод и передавать ему лишь нужное количество
 		for (int i = 0; i < pageCont; i++) {	
 			String URLPage = getURL.getPageURl(i, countryCode);
 	        Parser Page = new Parser(URLPage);
-	        listSite.addAll(parserPage.getParserList(Page, pageCont));
+	        Sites.addAll(parserPage.getParserList(Page, pageCont));
 		}
 		
 		// Блок сохранения данных в файл
@@ -63,7 +63,7 @@ public class Begin {
 			saveToFile = new SaveToFileCSV();
 		}
 		
-		saveToFile.saveToFile(listSite, siteCount);
+		saveToFile.saveToFile(Sites, siteCount);
 		
 	}
 }

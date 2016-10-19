@@ -6,5 +6,5 @@ import org.balu.alexa.object.Site;
 
 public interface SaveToFile {
 
-	public void saveToFile(List<Site> listSite, int count);
+	public void saveToFile(List<Site> Sites, int count);
 }

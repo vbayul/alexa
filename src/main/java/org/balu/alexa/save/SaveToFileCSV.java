@@ -9,9 +9,9 @@ import org.balu.alexa.object.Site;
 public class SaveToFileCSV implements SaveToFile{
 
 	@Override
-	public void saveToFile(List<Site> listSite, int count) {
+	public void saveToFile(List<Site> Sites, int count) {
 		createCSV();
-		saveToCSV(listSite, count);
+		saveToCSV(Sites, count);
 	}
 	
 	private void createCSV() 
@@ -24,16 +24,16 @@ public class SaveToFileCSV implements SaveToFile{
 		}
 	}
 	
-	private void saveToCSV(List<Site> listSite, int count)
+	private void saveToCSV(List<Site> Sites, int count)
 	{
 		try(FileWriter writer = new FileWriter("result.csv", false))
 		{
-			for (int i = 0; i <listSite.size(); i++) {
-				Site site = listSite.get(i);
+			for (int i = 0; i <Sites.size(); i++) {
+				Site site = Sites.get(i);
 				if (Integer.parseInt(site.getCountrRank()) <= count)
 				{
 					writer.write(site.getCountrRank()+";"+site.getURL()+";"
-							+site.getGlobalRank()+";"+site.getStatURL()+System.getProperty("line.separator"));
+							+site.getGlobalRank().trim()+";"+site.getStatURL()+System.getProperty("line.separator"));
 				}
 			}
 		}
