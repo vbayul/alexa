@@ -30,7 +30,7 @@ public class SaveToFileCSV implements SaveToFile{
 		{
 			for (int i = 0; i <Sites.size(); i++) {
 				Site site = Sites.get(i);
-				if (Integer.parseInt(site.getCountrRank()) <= count)
+				if (site.getCountrRank() <= count)
 				{
 					writer.write(site.getCountrRank()+";"+site.getURL()+";"
 							+site.getGlobalRank().trim()+";"+site.getStatURL()+System.getProperty("line.separator"));

@@ -1,8 +1,11 @@
 package org.balu.alexa;
 
-public class GetURL {
+import org.htmlparser.Parser;
+import org.htmlparser.util.ParserException;
 
-	public String getPageURl(int i, String countryCode)
+public class ParserAndURL {
+
+	public String getURL(int i, String countryCode)
 	{
 		String URL ="";
 		String page = ""; 
@@ -19,5 +22,19 @@ public class GetURL {
 		else
 			URL ="http://www.alexa.com/topsites/countries"+page+"/"+countryCode;	
 		return URL;
+	}
+
+	public Parser getPage(String URL)
+	{
+		Parser page = null;
+		try 
+		{
+			page = new Parser(URL);
+		} 
+		catch (ParserException e) 
+		{
+			e.printStackTrace();
+		}
+		return page;
 	}
 }

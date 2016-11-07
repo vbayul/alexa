@@ -36,7 +36,7 @@ public class SaveToFileHTML implements SaveToFile{
 		{
 			for (int i = 0; i < Sites.size(); i++) {
 				Site site = Sites.get(i);
-				if (Integer.parseInt(site.getCountrRank()) <= count)
+				if (site.getCountrRank() <= count)
 				{
 					writer.write("<tr><td>"+site.getCountrRank()+"</td><td>"+site.getURL()+"</td>"
 			 		+ "<td>"+site.getGlobalRank()+"</td><td>"+site.getStatURL()+"</td></tr>"

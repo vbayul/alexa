@@ -2,14 +2,15 @@ package org.balu.alexa.object;
 
 public class Site {
 
-	private String countrRank;
+	private int countrRank;
 	private String URL;
 	private String globalRank;
 	private String statURL;
-	public String getCountrRank() {
+	
+	public int getCountrRank() {
 		return countrRank;
 	}
-	public void setCountrRank(String countrRank) {
+	public void setCountrRank(int countrRank) {
 		this.countrRank = countrRank;
 	}
 	public String getURL() {

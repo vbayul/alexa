@@ -3,58 +3,37 @@ package org.balu.alexa;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.balu.alexa.object.Parameter;
 import org.balu.alexa.object.Site;
 import org.balu.alexa.parser.ParserPage;
 import org.balu.alexa.save.SaveToFile;
 import org.balu.alexa.save.SaveToFileCSV;
 import org.balu.alexa.save.SaveToFileHTML;
 import org.htmlparser.Parser;
-import org.htmlparser.util.ParserException;
 
 public class Begin {
 
-	private static int DefSiteCount = 25;
-	private static String DefCountryCode = "";
-	private static String DefFileFormat ="html";
-	private static int DefContSiteOnPage = 25;
-	
-	public static void main(String[] args) throws ParserException 
+	public static void main(String[] args)
 	{
-		List<Site> Sites = new ArrayList<Site>();
-		
-		// парсим входные параметры
-		ParsInputParam parsInputParam = new ParsInputParam();
-		
-		int siteCount = parsInputParam.getCountSite(args, DefSiteCount);
-		
-		int pageCont = parsInputParam.getPageCount(siteCount, DefContSiteOnPage);
-		
-		String countryCode =  parsInputParam.getCountry(args, DefCountryCode);
-		
-		String fileFormat = parsInputParam.getFormat(args, DefFileFormat);
-		
-		
-		// объявляем объект для вычисления нужного URL
-		GetURL getURL = new GetURL();
+		List<Site> sites = new ArrayList<Site>();
 
-		ParserPage parserPage = new ParserPage();
-
-
-		// массив для хранения объектов класса Сайт, которые содержат данные осайте. 
-
-		
-		// перенести в метод и передавать ему лишь нужное количество
-		for (int i = 0; i < pageCont; i++) {	
-			String URLPage = getURL.getPageURl(i, countryCode);
-	        Parser Page = new Parser(URLPage);
-	        Sites.addAll(parserPage.getParserList(Page, pageCont));
-		}
-		
-		// Блок сохранения данных в файл
 		SaveToFile saveToFile;
+		ParserAndURL pageURL = new ParserAndURL();
+		ParserPage parserPage = new ParserPage();
+		ParsInputParam parsInputParam = new ParsInputParam(args);
+		
+		Parameter param = parsInputParam.getParam();
 
-		// подготовка нужного типа файла
-		if (fileFormat.equals("html"))
+		for (int i = 0; i < param.getPageCount(); i++) 
+		{	
+			String URL= pageURL.getURL(i, param.getCountryCode());
+			Parser page = pageURL.getPage(URL);
+			
+			List<Site> tempSites = parserPage.getParserList(page);
+	        sites.addAll(tempSites);
+		}
+
+		if (param.getFileFormat().equals("html"))
 		{
 			saveToFile = new SaveToFileHTML();
 		}
@@ -63,7 +42,7 @@ public class Begin {
 			saveToFile = new SaveToFileCSV();
 		}
 		
-		saveToFile.saveToFile(Sites, siteCount);
+		saveToFile.saveToFile(sites, param.getSiteCount());
 		
 	}
 }
