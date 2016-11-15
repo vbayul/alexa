@@ -18,8 +18,9 @@ public class Begin {
 		List<Site> sites = new ArrayList<Site>();
 
 		SaveToFile saveToFile;
-		ParserAndURL pageURL = new ParserAndURL();
+		ConstryctorURL pageURL = new ConstryctorURL();
 		ParserPage parserPage = new ParserPage();
+		ParserFactory parserFactory = new ParserFactory();
 		ParsInputParam parsInputParam = new ParsInputParam(args);
 		
 		Parameter param = parsInputParam.getParam();
@@ -27,7 +28,7 @@ public class Begin {
 		for (int i = 0; i < param.getPageCount(); i++) 
 		{	
 			String URL= pageURL.getURL(i, param.getCountryCode());
-			Parser page = pageURL.getPage(URL);
+			Parser page = parserFactory.getPage(URL);
 			
 			List<Site> tempSites = parserPage.getParserList(page);
 	        sites.addAll(tempSites);

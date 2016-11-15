@@ -2,8 +2,7 @@ package org.balu.alexa.parser;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.balu.alexa.ParserAndURL;
+import org.balu.alexa.ParserFactory;
 import org.balu.alexa.object.Site;
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
@@ -66,13 +65,13 @@ public class ParserPage {
 	
 	private List<Site> getSiteGlobalRank(List<Site> sites)
 	{
-		ParserAndURL page = new ParserAndURL();
+		ParserFactory parserFactory = new ParserFactory();
 		
 		for (int i = 0; i < sites.size(); i++) {
 			Site site = sites.get(i);
 			String URL = site.getStatURL();
 			
-			Parser pageGlobalRank = page.getPage(URL);
+			Parser pageGlobalRank = parserFactory.getPage(URL);
 			site = ParsGlobalRank(pageGlobalRank, site);
 			
 			sites.set(i, site);
