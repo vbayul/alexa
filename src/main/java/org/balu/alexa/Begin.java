@@ -20,7 +20,7 @@ public class Begin {
 		SaveToFile saveToFile;
 		ConstryctorURL pageURL = new ConstryctorURL();
 		ParserPage parserPage = new ParserPage();
-		ParserFactory parserFactory = new ParserFactory();
+		GetParserObject parserFactory = new GetParserObject();
 		ParsInputParam parsInputParam = new ParsInputParam(args);
 		
 		Parameter param = parsInputParam.getParam();

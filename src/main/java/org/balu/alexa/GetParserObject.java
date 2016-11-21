@@ -3,7 +3,7 @@ package org.balu.alexa;
 import org.htmlparser.Parser;
 import org.htmlparser.util.ParserException;
 
-public class ParserFactory {
+public class GetParserObject {
 	
 	public Parser getPage(String URL)
 	{

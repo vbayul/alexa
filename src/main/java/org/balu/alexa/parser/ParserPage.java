@@ -2,7 +2,7 @@ package org.balu.alexa.parser;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.balu.alexa.ParserFactory;
+import org.balu.alexa.GetParserObject;
 import org.balu.alexa.object.Site;
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
@@ -65,7 +65,7 @@ public class ParserPage {
 	
 	private List<Site> getSiteGlobalRank(List<Site> sites)
 	{
-		ParserFactory parserFactory = new ParserFactory();
+		GetParserObject parserFactory = new GetParserObject();
 		
 		for (int i = 0; i < sites.size(); i++) {
 			Site site = sites.get(i);
@@ -100,24 +100,28 @@ public class ParserPage {
 	private NodeList nodeFilter(Parser page, String step)
 	{
 		NodeList nodes = null; 
-		try
+		NodeFilter atrb = null;
+		
+		if (step.equals("GlobalRank"))
 		{
-			NodeFilter atrb = null;
-			if (step.equals("GlobalRank"))
-			{
-				atrb = new AndFilter(new TagNameFilter("strong"), 
-        	    new HasAttributeFilter("class","metrics-data align-vmiddle"));
-			}
-	        else
-	        {
-	        	atrb= new AndFilter(new TagNameFilter("a"), 
-	        	    new HasAttributeFilter("href"));
-	        }
-        	nodes = page.parse(atrb);
-	    } 
-		catch (ParserException e) {
-	        e.printStackTrace();
+			atrb = new AndFilter(new TagNameFilter("strong"), 
+					new HasAttributeFilter("class","metrics-data align-vmiddle"));
+		}
+	    else
+	    {
+	        atrb= new AndFilter(new TagNameFilter("a"), 
+	        		new HasAttributeFilter("href"));
 	    }
+			
+        try 
+        {
+			nodes = page.parse(atrb);
+		} 
+        catch (ParserException e)
+        {
+			e.printStackTrace();
+		}
+
 		return nodes;
 	}
 }
