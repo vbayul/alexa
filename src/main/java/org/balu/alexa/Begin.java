@@ -9,6 +9,9 @@ import org.balu.alexa.parser.ParserPage;
 import org.balu.alexa.save.SaveToFile;
 import org.balu.alexa.save.SaveToFileCSV;
 import org.balu.alexa.save.SaveToFileHTML;
+import org.balu.url.ConstryctorURL;
+import org.balu.url.CountryURL;
+import org.balu.url.TopSiteURL;
 import org.htmlparser.Parser;
 
 public class Begin {
@@ -18,13 +21,19 @@ public class Begin {
 		List<Site> sites = new ArrayList<Site>();
 
 		SaveToFile saveToFile;
-		ConstryctorURL pageURL = new ConstryctorURL();
+		ConstryctorURL pageURL;
 		ParserPage parserPage = new ParserPage();
 		GetParserObject parserFactory = new GetParserObject();
 		ParsInputParam parsInputParam = new ParsInputParam(args);
 		
 		Parameter param = parsInputParam.getParam();
-
+		String country = param.getCountryCode();
+		
+		if (country.equals(""))
+			pageURL = new TopSiteURL();
+		else
+			pageURL = new CountryURL();
+		
 		for (int i = 0; i < param.getPageCount(); i++) 
 		{	
 			String URL= pageURL.getURL(i, param.getCountryCode());

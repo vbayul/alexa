@@ -25,7 +25,7 @@ public class ParsInputParam {
 		return param;
 	}
 	
-	public int getSiteCount(String[] inputParamArr)
+	private int getSiteCount(String[] inputParamArr)
 	{
 		int siteCount = DefSiteCount;
 		
@@ -40,21 +40,28 @@ public class ParsInputParam {
 		return	siteCount;
 	}
 	
-	public String getCountryCode(String[] inputParamArr)
+	private String getCountryCode(String[] inputParams)
 	{
 		String countryCode = DefCountryCode;
 
-		if (inputParamArr.length != 0 
-				&& inputParamArr[inputParamArr.length-1].length()==2)
+		if (inputParams.length != 0 
+				&& inputParams[inputParams.length-1].length()==2)
 		{
-			if (inputParamArr[inputParamArr.length-1].matches("^[A-Z][A-Z]"))
-				countryCode = inputParamArr[inputParamArr.length-1];
+			if (countryParsing(inputParams))
+				countryCode = inputParams[inputParams.length-1];
 		}
 		
 		return countryCode;
 	}
 	
-	public String getFileFormat(String[] inputParamArr)
+	private boolean countryParsing(String[] inputParams)
+	{
+		return inputParams[inputParams.length-1].matches("^[A-Z][A-Z]");
+	}
+	
+	
+	
+	private String getFileFormat(String[] inputParamArr)
 	{
 		String fileFormat = DefFileFormat;
 		
@@ -66,11 +73,11 @@ public class ParsInputParam {
 		return fileFormat;
 	}
 	
-	public int getPageCount(int siteCount)
+	private int getPageCount(int siteCount)
 	{
 		int pageCont;
 
-		if (siteCount%DefCountSiteOnPage==0)
+		if (siteCount % DefCountSiteOnPage == 0)
 		{
 			pageCont = siteCount/DefCountSiteOnPage;
 		}
