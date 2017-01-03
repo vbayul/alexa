@@ -1,4 +1,4 @@
-package org.balu.url;
+package org.balu.alexa.url;
 
 import org.apache.commons.lang3.StringUtils;
 

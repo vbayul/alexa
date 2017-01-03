@@ -1,4 +1,4 @@
-package org.balu.url;
+package org.balu.alexa.url;
 
 public interface ConstryctorURL {
 	

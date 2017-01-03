@@ -9,9 +9,9 @@ import org.balu.alexa.parser.ParserPage;
 import org.balu.alexa.save.SaveToFile;
 import org.balu.alexa.save.SaveToFileCSV;
 import org.balu.alexa.save.SaveToFileHTML;
-import org.balu.url.ConstryctorURL;
-import org.balu.url.CountryURL;
-import org.balu.url.TopSiteURL;
+import org.balu.alexa.url.ConstryctorURL;
+import org.balu.alexa.url.CountryURL;
+import org.balu.alexa.url.TopSiteURL;
 import org.htmlparser.Parser;
 
 public class Begin {
