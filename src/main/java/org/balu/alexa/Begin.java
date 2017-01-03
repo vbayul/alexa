@@ -9,7 +9,7 @@ import org.balu.alexa.parser.ParserPage;
 import org.balu.alexa.save.SaveToFile;
 import org.balu.alexa.save.SaveToFileCSV;
 import org.balu.alexa.save.SaveToFileHTML;
-import org.balu.alexa.url.ConstryctorURL;
+import org.balu.alexa.url.ConstrycrotURL;
 import org.balu.alexa.url.CountryURL;
 import org.balu.alexa.url.TopSiteURL;
 import org.htmlparser.Parser;
@@ -21,7 +21,7 @@ public class Begin {
 		List<Site> sites = new ArrayList<Site>();
 
 		SaveToFile saveToFile;
-		ConstryctorURL pageURL;
+		ConstrycrotURL pageURL;
 		ParserPage parserPage = new ParserPage();
 		GetParserObject parserFactory = new GetParserObject();
 		ParsInputParam parsInputParam = new ParsInputParam(args);

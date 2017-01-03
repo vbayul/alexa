@@ -5,10 +5,15 @@ import java.util.List;
 import org.balu.alexa.GetParserObject;
 import org.balu.alexa.object.Site;
 import org.htmlparser.Node;
+import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
+import org.htmlparser.filters.AndFilter;
+import org.htmlparser.filters.HasAttributeFilter;
+import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.util.NodeList;
+import org.htmlparser.util.ParserException;
 
-public class StatisticRank extends Rank{
+public class StatisticRank implements Rank{
 
 	public List<Site> getSiteGlobalRank(List<Site> sites)
 	{
@@ -43,4 +48,23 @@ public class StatisticRank extends Rank{
 
 		return site;
 	}
+
+	@Override
+	public NodeList nodeFilter(Parser page, String steps) {
+		
+		NodeList nodes = new NodeList(); 
+		NodeFilter attribute = new AndFilter(new TagNameFilter("strong"), 
+				new HasAttributeFilter("class","metrics-data align-vmiddle"));
+        try 
+        {
+			nodes = page.parse(attribute);
+		} 
+        catch (ParserException e)
+        {
+			e.printStackTrace();
+		}
+
+		return nodes;
+	}
+
 }

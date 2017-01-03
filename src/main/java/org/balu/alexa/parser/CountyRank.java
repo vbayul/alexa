@@ -4,10 +4,15 @@ import java.util.List;
 
 import org.balu.alexa.object.Site;
 import org.htmlparser.Node;
+import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
+import org.htmlparser.filters.AndFilter;
+import org.htmlparser.filters.HasAttributeFilter;
+import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.util.NodeList;
+import org.htmlparser.util.ParserException;
 
-public class CountyRank extends Rank {
+public class CountyRank implements Rank {
 	
 	public List<Site> getCountryRankStatisticURL(Parser page, List<Site> sites)
 	{		
@@ -47,4 +52,21 @@ public class CountyRank extends Rank {
 		return true;
 	}
 	
+	@Override
+	public NodeList nodeFilter(Parser page, String steps) {
+		
+		NodeList nodes = new NodeList();
+		NodeFilter attribute = new AndFilter(new TagNameFilter("a"), 
+        		new HasAttributeFilter("href"));
+        try 
+        {
+			nodes = page.parse(attribute);
+		} 
+        catch (ParserException e)
+        {
+			e.printStackTrace();
+		}
+
+		return nodes;
+	}
 }

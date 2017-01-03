@@ -2,7 +2,7 @@ package org.balu.alexa.url;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class TopSiteURL extends ConstrycrotURLImp{
+public class TopSiteURL extends ConstrycrotURL{
 
 	@Override
 	public String getURL(int pageCount, String countryCode) {
