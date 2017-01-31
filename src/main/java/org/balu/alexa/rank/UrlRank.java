@@ -1,8 +1,8 @@
-package org.balu.alexa.parser;
+package org.balu.alexa.rank;
 
 import java.util.List;
 
-import org.balu.alexa.object.Site;
+import org.balu.alexa.model.Site;
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
@@ -12,15 +12,14 @@ import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 
-public class CountyRank implements Rank {
+public class UrlRank implements Rank {
 	
 	public List<Site> getCountryRankStatisticURL(Parser page, List<Site> sites)
 	{		
-
-		NodeList nodes = nodeFilter(page, "CountryRank");
+		NodeList nodes = nodeFilter(page);
+		int index = 0;
 		
-		int index = 1;
-		for(int i=0; i<nodes.size(); i++) 
+		for(int i = 0; i<nodes.size(); i++) 
 		{
 			Node node = nodes.elementAt(i);
 		
@@ -28,14 +27,13 @@ public class CountyRank implements Rank {
 			{
 				String statURL = node.getText().substring(8, node.getText().length()-1);
 
-				Site site = new Site();
-				site.setCountrRank(index);
+				Site site = sites.get(index);
+				
 				site.setStatURL("http://alexa.com"+statURL);
 				site.setURL("http://"+node.toPlainTextString());
 
-				sites.add(site);
-			    
-				index = index+1;
+				sites.set(index, site);
+				index++;
 			}
 		}
 		return sites;
@@ -53,7 +51,7 @@ public class CountyRank implements Rank {
 	}
 	
 	@Override
-	public NodeList nodeFilter(Parser page, String steps) {
+	public NodeList nodeFilter(Parser page) {
 		
 		NodeList nodes = new NodeList();
 		NodeFilter attribute = new AndFilter(new TagNameFilter("a"), 

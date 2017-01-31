@@ -1,57 +1,32 @@
 package org.balu.alexa;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.balu.alexa.object.Parameter;
-import org.balu.alexa.object.Site;
-import org.balu.alexa.parser.ParserPage;
+import org.balu.alexa.model.Parameter;
+import org.balu.alexa.model.Site;
+import org.balu.alexa.parser.Parsers;
+import org.balu.alexa.save.SaveFactory;
 import org.balu.alexa.save.SaveToFile;
-import org.balu.alexa.save.SaveToFileCSV;
-import org.balu.alexa.save.SaveToFileHTML;
 import org.balu.alexa.url.ConstrycrotURL;
-import org.balu.alexa.url.CountryURL;
-import org.balu.alexa.url.TopSiteURL;
-import org.htmlparser.Parser;
+import org.balu.alexa.url.UrlFactory;
 
 public class Begin {
 
-	public static void main(String[] args)
-	{
-		List<Site> sites = new ArrayList<Site>();
-
+	public static void main(String[] args){
+		
 		SaveToFile saveToFile;
 		ConstrycrotURL pageURL;
-		ParserPage parserPage = new ParserPage();
-		GetParserObject parserFactory = new GetParserObject();
 		ParsInputParam parsInputParam = new ParsInputParam(args);
+		Parsers parser = new Parsers(); 
+		SaveFactory saveFactory = new SaveFactory();
+		UrlFactory urlFactory = new UrlFactory();
 		
 		Parameter param = parsInputParam.getParam();
-		String country = param.getCountryCode();
+		pageURL = urlFactory.countryPageURL(param.getCountryCode());
 		
-		if (country.equals(""))
-			pageURL = new TopSiteURL();
-		else
-			pageURL = new CountryURL();
+		List<Site> sites = parser.parsingPages(pageURL, param);
 		
-		for (int i = 0; i < param.getPageCount(); i++) 
-		{	
-			String URL= pageURL.getURL(i, param.getCountryCode());
-			Parser page = parserFactory.getPage(URL);
-			
-			List<Site> tempSites = parserPage.getParserList(page);
-	        sites.addAll(tempSites);
-		}
-
-		if (param.getFileFormat().equals("html"))
-		{
-			saveToFile = new SaveToFileHTML();
-		}
-		else
-		{
-			saveToFile = new SaveToFileCSV();
-		}
-		
+		saveToFile = saveFactory.saveFileFactory(param.getFileFormat());
 		saveToFile.saveToFile(sites, param.getSiteCount());
 		
 	}

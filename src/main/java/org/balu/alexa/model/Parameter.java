@@ -1,4 +1,4 @@
-package org.balu.alexa.object;
+package org.balu.alexa.model;
 
 public class Parameter {
 	

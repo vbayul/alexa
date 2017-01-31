@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import org.balu.alexa.object.Site;
+import org.balu.alexa.model.Site;
 
 public class SaveToFileCSV implements SaveToFile{
 
@@ -30,10 +30,10 @@ public class SaveToFileCSV implements SaveToFile{
 		{
 			for (int i = 0; i <Sites.size(); i++) {
 				Site site = Sites.get(i);
-				if (site.getCountrRank() <= count)
+				if (site.getCountryRank() <= count)
 				{
-					writer.write(site.getCountrRank()+";"+site.getURL()+";"
-							+site.getGlobalRank().trim()+";"+site.getStatURL()+System.getProperty("line.separator"));
+					writer.write(site.getCountryRank()+";"+site.getURL()+";"
+							+site.getGlobalRank()+";"+site.getStatURL()+System.getProperty("line.separator"));
 				}
 			}
 		}

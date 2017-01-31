@@ -4,7 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-import org.balu.alexa.object.Site;
+import org.balu.alexa.model.Site;
 
 public class SaveToFileHTML implements SaveToFile{
 
@@ -36,9 +36,9 @@ public class SaveToFileHTML implements SaveToFile{
 		{
 			for (int i = 0; i < Sites.size(); i++) {
 				Site site = Sites.get(i);
-				if (site.getCountrRank() <= count)
+				if (site.getCountryRank() <= count)
 				{
-					writer.write("<tr><td>"+site.getCountrRank()+"</td><td>"+site.getURL()+"</td>"
+					writer.write("<tr><td>"+site.getCountryRank()+"</td><td>"+site.getURL()+"</td>"
 			 		+ "<td>"+site.getGlobalRank()+"</td><td>"+site.getStatURL()+"</td></tr>"
 			 		+System.getProperty("line.separator"));
 				}

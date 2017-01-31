@@ -1,9 +1,8 @@
-package org.balu.alexa.parser;
+package org.balu.alexa.rank;
 
 import java.util.List;
 
-import org.balu.alexa.GetParserObject;
-import org.balu.alexa.object.Site;
+import org.balu.alexa.model.Site;
 import org.htmlparser.Node;
 import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
@@ -13,36 +12,48 @@ import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 
-public class StatisticRank implements Rank{
+public class GlobalRank implements Rank{
 
 	public List<Site> getSiteGlobalRank(List<Site> sites)
 	{
-		GetParserObject parserFactory = new GetParserObject();
 		
 		for (int i = 0; i < sites.size(); i++) {
 			Site site = sites.get(i);
-			String URL = site.getStatURL();
-			
-			Parser pageGlobalRank = parserFactory.getPage(URL);
+			Parser pageGlobalRank = getPage(site.getStatURL());
 			site = parsGlobalRank(pageGlobalRank, site);
 			
+			System.out.println(site);
 			sites.set(i, site);
 		}
 		return sites;
 	}
 	
+	private Parser getPage(String URL)
+	{
+		Parser page = null;
+		try 
+		{
+			page = new Parser(URL);
+		} 
+		catch (ParserException e) 
+		{
+			e.printStackTrace();
+		}
+		return page;
+	}
+	
 	private Site parsGlobalRank(Parser page, Site site)
 	{	
-		NodeList nodes = nodeFilter(page, "GlobalRank");
+		NodeList nodes = nodeFilter(page);
 		
-		for(int i=0; i<nodes.size(); i++) 
+		for(int i = 0; i < nodes.size(); i++) 
 		{
 			Node node = nodes.elementAt(i);
 
 		    if (node.getPreviousSibling().toHtml().contains("title='Global rank icon'"))
 		    {
 		    	String rank = node.getNextSibling().getNextSibling().getNextSibling().getText().replaceAll(",", "");
-		        site.setGlobalRank(rank);
+		        site.setGlobalRank(Integer.valueOf(rank.trim()));
 		    }
 		}
 
@@ -50,7 +61,7 @@ public class StatisticRank implements Rank{
 	}
 
 	@Override
-	public NodeList nodeFilter(Parser page, String steps) {
+	public NodeList nodeFilter(Parser page) {
 		
 		NodeList nodes = new NodeList(); 
 		NodeFilter attribute = new AndFilter(new TagNameFilter("strong"), 

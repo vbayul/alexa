@@ -1,10 +1,10 @@
 package org.balu.alexa;
 
-import org.balu.alexa.object.Parameter;
+import org.balu.alexa.model.Parameter;
 
 public class ParsInputParam {
 	
-	private int DefSiteCount = 25;
+	private int DefSiteCount = 50;
 	private String DefCountryCode = "";
 	private String DefFileFormat ="html";
 	private int DefCountSiteOnPage = 25;

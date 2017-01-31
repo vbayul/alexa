@@ -2,7 +2,7 @@ package org.balu.alexa.save;
 
 import java.util.List;
 
-import org.balu.alexa.object.Site;
+import org.balu.alexa.model.Site;
 
 public interface SaveToFile {
 
