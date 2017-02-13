@@ -4,15 +4,11 @@ import java.util.List;
 
 import org.balu.alexa.model.Site;
 import org.htmlparser.Node;
-import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
-import org.htmlparser.filters.AndFilter;
-import org.htmlparser.filters.HasAttributeFilter;
-import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 
-public class GlobalRank implements Rank{
+public class GlobalRank{
 
 	public List<Site> getSiteGlobalRank(List<Site> sites)
 	{
@@ -44,7 +40,8 @@ public class GlobalRank implements Rank{
 	
 	private Site parsGlobalRank(Parser page, Site site)
 	{	
-		NodeList nodes = nodeFilter(page);
+		Filter filter = new Filter();
+		NodeList nodes = filter.nodeFilter(page,"global");
 		
 		for(int i = 0; i < nodes.size(); i++) 
 		{
@@ -59,23 +56,4 @@ public class GlobalRank implements Rank{
 
 		return site;
 	}
-
-	@Override
-	public NodeList nodeFilter(Parser page) {
-		
-		NodeList nodes = new NodeList(); 
-		NodeFilter attribute = new AndFilter(new TagNameFilter("strong"), 
-				new HasAttributeFilter("class","metrics-data align-vmiddle"));
-        try 
-        {
-			nodes = page.parse(attribute);
-		} 
-        catch (ParserException e)
-        {
-			e.printStackTrace();
-		}
-
-		return nodes;
-	}
-
 }

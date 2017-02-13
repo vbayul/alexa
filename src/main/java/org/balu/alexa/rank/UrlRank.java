@@ -4,19 +4,15 @@ import java.util.List;
 
 import org.balu.alexa.model.Site;
 import org.htmlparser.Node;
-import org.htmlparser.NodeFilter;
 import org.htmlparser.Parser;
-import org.htmlparser.filters.AndFilter;
-import org.htmlparser.filters.HasAttributeFilter;
-import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.util.NodeList;
-import org.htmlparser.util.ParserException;
 
-public class UrlRank implements Rank {
+public class UrlRank {
 	
 	public List<Site> getCountryRankStatisticURL(Parser page, List<Site> sites)
 	{		
-		NodeList nodes = nodeFilter(page);
+		Filter filter = new Filter();
+		NodeList nodes = filter.nodeFilter(page, "url");
 		int index = 0;
 		
 		for(int i = 0; i<nodes.size(); i++) 
@@ -50,21 +46,4 @@ public class UrlRank implements Rank {
 		return true;
 	}
 	
-	@Override
-	public NodeList nodeFilter(Parser page) {
-		
-		NodeList nodes = new NodeList();
-		NodeFilter attribute = new AndFilter(new TagNameFilter("a"), 
-        		new HasAttributeFilter("href"));
-        try 
-        {
-			nodes = page.parse(attribute);
-		} 
-        catch (ParserException e)
-        {
-			e.printStackTrace();
-		}
-
-		return nodes;
-	}
 }
